@@ -1,0 +1,8 @@
+/hotelenv
+__pycache__/
+**/__pycache__/  
+/py_client
+**/__init__.py
+db.sqlite3
+**/media
+**/static
