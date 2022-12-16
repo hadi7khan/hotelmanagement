@@ -1,0 +1,11 @@
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('hotels/', views.hoteList, name="hotel-list"),
+    path('areas/', views.areaList, name='area-list'),
+    path('locations/', views.locationList, name="location-list"),
+    path('rooms/<int:pk>/', views.roomDetails, name= "room-details" ),
+    path('rooms/', views.roomList, name="room-list"),
+]

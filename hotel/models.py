@@ -26,4 +26,4 @@ class Room(models.Model):
   hotel = models.ForeignKey(Hotel, related_name= "hotel_room", on_delete=models.CASCADE)
 
   def __str__(self):
-    return self.room_no
+    return str(self.room_no)
