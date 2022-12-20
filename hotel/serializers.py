@@ -5,7 +5,7 @@ from .models import Hotel, Area, Location, Room
 class HotelSerializer(serializers.ModelSerializer):
   class Meta:
     model = Hotel
-    fields = "__all__"
+    fields = ["id", "name"]
 
 class AreaSerializer(serializers.ModelSerializer):
   class Meta:
@@ -36,3 +36,13 @@ class RoomdetailsSerializer(serializers.ModelSerializer):
   def get_hotel(self, obj):
     hotel = obj.hotel.name
     return hotel
+
+class HotelDetailSerializer(serializers.ModelSerializer):
+  area = serializers.SerializerMethodField(read_only=True)
+  class Meta:
+    model = Hotel
+    fields = "__all__"
+
+  def get_area(self, obj):
+    area = obj.area.name
+    return area
