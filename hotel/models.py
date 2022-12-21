@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Location(models.Model):
   name = models.CharField(max_length=200)
@@ -25,6 +26,7 @@ class Hotel(models.Model):
 
 class RoomType(models.Model):
   type = models.CharField(max_length=100)
+  hotel = models.ForeignKey(Hotel, related_name="hotel_name", on_delete=models.CASCADE)
 
   def __str__(self):
     return self.type
@@ -36,8 +38,23 @@ class Room(models.Model):
   attached_bathroom = models.BooleanField(default=False)
   bed = models.CharField(max_length=10)
   entertainment = models.BooleanField(default=False)
+  price = models.IntegerField()
+  booked = models.BooleanField(default=False)
 
 
   def __str__(self):
     return str(self.room_no)
+
+class Order(models.Model):
+  room = models.ForeignKey(Room, related_name="room_booking_detail", on_delete=models.CASCADE)
+  user = models.ForeignKey(User, related_name="user_order", on_delete=models.CASCADE)
+  price = models.IntegerField()
+  days = models.IntegerField()
+  added_meals = models.BooleanField(default=False)
+  meals_price = models.IntegerField()
+
+
+  def __str__(self):
+    return str(self.user)
+
 

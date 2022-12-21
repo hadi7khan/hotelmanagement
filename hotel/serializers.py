@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Hotel, Area, Location, Room
+from .models import Hotel, Area, Location, Room, Order
 
 class HotelSerializer(serializers.ModelSerializer):
   class Meta:
@@ -46,3 +46,9 @@ class HotelDetailSerializer(serializers.ModelSerializer):
   def get_area(self, obj):
     area = obj.area.name
     return area
+
+class CreateOrder(serializers.ModelSerializer):
+  class Meta:
+    model: Order
+    fields = "__all__"
+    

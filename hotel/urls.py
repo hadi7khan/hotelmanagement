@@ -9,4 +9,6 @@ urlpatterns = [
     path('rooms/<int:pk>/', views.roomDetails, name= "room-details" ),
     path('rooms/', views.roomList, name="room-list"),
     path('hotels/<int:pk>/', views.hotelDetails, name="hotel-details"),
+    path('hotels/orders/create/', views.createOrder, name="create-order"),
+    path('rooms/available/', views.getAvailableRooms, name="available-rooms"),
 ]

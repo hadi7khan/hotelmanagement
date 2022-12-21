@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework import status
 
-from .models import Hotel, Area, Location, Room
+from .models import Hotel, Area, Location, Room, Order
 from .serializers import (
     HotelSerializer,
     AreaSerializer,
@@ -12,6 +12,7 @@ from .serializers import (
     RoomdetailsSerializer,
     RoomSerializer,
     HotelDetailSerializer,
+    CreateOrder
 )
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -116,3 +117,38 @@ def hotelDetails(request, pk):
     #     "data": []
     #   }
     #   return Response(response)
+
+@api_view(['POST'])
+@authentication_classes([JWTAuthentication])
+@permission_classes([IsAuthenticated])
+def createOrder(request):
+    # print(request.data)
+    data = request.data
+    user = request.user
+    room = Room.objects.get(pk=data["room"])
+    order = Order.objects.create(
+        room=room,
+        user=user,
+        price=data["price"],
+        days=data["days"],
+        added_meals=data["added_meals"],
+        meals_price=data["meals_price"],
+    )
+    room.booked = True
+    room.save()
+    # order.save()
+    
+    return Response("Room booked successfully!", status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+def getAvailableRooms(request):
+    rooms = Room.objects.filter(booked=False)
+    serializer = RoomSerializer(rooms, many=True)
+
+    response = {
+        "status": "Success",
+        "code": status.HTTP_200_OK,
+        "message": "Available Rooms fetched succesfully",
+        "data": serializer.data,
+    }
+    return Response(response)
