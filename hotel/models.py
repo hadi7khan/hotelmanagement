@@ -40,10 +40,12 @@ class Room(models.Model):
   entertainment = models.BooleanField(default=False)
   price = models.IntegerField()
   booked = models.BooleanField(default=False)
+  check_in = models.DateField()
+  check_out = models.DateField()
 
 
   def __str__(self):
-    return str(self.room_no)
+    return str(self.hotel.name)
 
 class Order(models.Model):
   room = models.ForeignKey(Room, related_name="room_booking_detail", on_delete=models.CASCADE)
@@ -52,7 +54,7 @@ class Order(models.Model):
   days = models.IntegerField()
   added_meals = models.BooleanField(default=False)
   meals_price = models.IntegerField()
-
+  
 
   def __str__(self):
     return str(self.user)

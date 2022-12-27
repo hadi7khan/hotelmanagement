@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # Local
     "hotel.apps.HotelConfig",
     "oauth_app.apps.OauthAppConfig",
+    "bookings.apps.BookingsConfig",
 ]
 
 MIDDLEWARE = [
